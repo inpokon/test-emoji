@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {EmojiService} from "./service/emoji.service";
 
 @Component({
   selector: 'app-root',
@@ -9,14 +8,9 @@ import {EmojiService} from "./service/emoji.service";
 export class AppComponent implements OnInit {
   title = 'test-emoji';
 
-  constructor(private emojiService: EmojiService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.emojiService
-        .getEmoji()
-        .subscribe((response) => {
-          console.log(response);
-        });
 
   }
 }
