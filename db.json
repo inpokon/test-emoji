@@ -1,5 +1,5 @@
 {
-    "emoji": [
+  "emoji": [
       {"id": 1, "name": "100", "link": "https://github.githubassets.com/images/icons/emoji/unicode/1f4af.png?v8", "favorites": false},
       {"id": 2, "name": "1234", "link": "https://github.githubassets.com/images/icons/emoji/unicode/1f522.png?v8", "favorites": false},
       {"id": 3, "name": "+1", "link": "https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png?v8", "favorites": false},
@@ -1510,7 +1510,8 @@
       {"id": 1508, "name": "zimbabwe", "link": "https://github.githubassets.com/images/icons/emoji/unicode/1f1ff-1f1fc.png?v8", "favorites": false},
       {"id": 1509, "name": "zipper_mouth_face", "link": "https://github.githubassets.com/images/icons/emoji/unicode/1f910.png?v8", "favorites": false},
       {"id": 1510, "name": "zzz", "link": "https://github.githubassets.com/images/icons/emoji/unicode/1f4a4.png?v8", "favorites": false}
-    ]
+    ],
 
+  "deleteEmoji": []
 
 }

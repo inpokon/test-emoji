@@ -11,6 +11,10 @@ import { EmojiComponent } from './emoji/emoji.component';
 import { PaginationComponent } from './common/pagination/pagination.component';
 import { SideBarComponent } from './common/side-bar/side-bar.component';
 import { NavComponent } from './common/nav/nav.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { ChosenComponent } from './chosen/chosen.component';
+import { DeletedComponent } from './deleted/deleted.component';
+
 
 @NgModule({
   declarations: [
@@ -19,12 +23,15 @@ import { NavComponent } from './common/nav/nav.component';
     EmojiComponent,
     PaginationComponent,
     SideBarComponent,
-    NavComponent
+    NavComponent,
+    ChosenComponent,
+    DeletedComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
   ],
   providers: [EmojiService],
   bootstrap: [AppComponent]

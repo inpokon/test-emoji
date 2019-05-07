@@ -1,6 +1,18 @@
 .header {
 	margin-top: 25px;
 	h1 {
-		text-transform: uppercase;
+		//text-transform: uppercase;
+		margin: 0;
+		line-height: normal;
+	}
+}
+.logo {
+	display: flex;
+	height: 50px;
+	align-items: center;
+	img {
+		height: 30px;
+		max-width: 30px;
+		margin-right: 20px;
 	}
 }
