@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideBarComponent implements OnInit {
 
+  links: Array<any> = [
+    {name: "Избранные", link: 'chosen'},
+    {name: "Удаленные", link: 'deleted'}
+  ];
+
   constructor() { }
 
   ngOnInit() {

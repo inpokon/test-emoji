@@ -5,6 +5,10 @@
      routerLink="/">
     Все
   </a>
-  <a routerLinkActive="active" class="nav-link" routerLink="/chosen" >Избранные</a>
-  <a routerLinkActive="active" class="nav-link" routerLink="/deleted">Удаленные</a>
+  <a *ngFor="let link of links"
+     routerLinkActive="active"
+     class="nav-link"
+     [routerLink]="['/', link.link]">
+    {{link.name}}
+  </a>
 </div>
