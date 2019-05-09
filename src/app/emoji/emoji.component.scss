@@ -1,14 +1,60 @@
+.table {
+	width: 100%;
+	table-layout: inherit;
+	tbody tr:first-child td, tr:first-child th {
+		border-top: none;
+	}
+}
 .preview {
 	max-width: 25px;
 	max-height: 25px;
 }
-app-nav {
-	width: 100%;
-}
-.emoji__btns {
+tr {
+	font-size: 0.7rem;
 	display: flex;
-	justify-content: flex-end;
-	.btn {
-		margin-left: 15px;
+}
+td {
+	width: 10%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+th {
+	width: 10%;
+}
+th:first-child {
+	width: 20%;
+}
+th:nth-child(2),td:nth-child(2) {
+	width: 50%;
+}
+th:last-child, td:last-child {
+	width: 20%;
+}
+
+
+tr.active {
+	background-color: #fff0fe;
+}
+thead>tr>th {
+	cursor: pointer;
+}
+.navbar {
+	display: flex;
+	border-radius: .25rem .25rem 0 0;
+	&-brand {
+		width: 25%;
+	}
+	input.form-control {
+		width: 45%;
+	}
+}
+.btn-group {
+	img {
+		width: 15px;
+		height: 15px;
+	}
+	.btn-danger {
+		background-color: #FF281F;
 	}
 }

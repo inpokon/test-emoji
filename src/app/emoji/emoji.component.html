@@ -1,13 +1,73 @@
- <tr *ngFor="let item of emoji">
-      <th scope="row">{{item.id}}</th>
-      <td><a class="alert-link" [href]="item.link" target="_blank">{{item.name}}</a></td>
-      <td><img class="preview" [src]="item.link" [alt]="item.name"></td>
-      <td class="emoji__btns">
-        <button class="btn btn-primary">В избранное</button>
-        <button class="btn badge-danger"> Удалить</button>
-      </td>
-    </tr>
+<nav class="navbar navbar-dark bg-primary">
+    <span class="navbar-brand navbar-light">{{title}}</span>
+    <input class="form-control mr-sm-2" type="text" placeholder="Поиск" [(ngModel)]="filter" />
+</nav>
 
- <p>Все</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th (click)="sort('name')">
+                Имя
+                <span class="glyphicon sort-icon"
+                      *ngIf="key =='name'"
+                      [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
+                </span>
+            </th>
+            <th (click)="sort('link')">
+                Ссылка
+                <span class="glyphicon sort-icon"
+                      *ngIf="key =='link'"
+                      [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
+                </span>
+            </th>
+            <th>Миниатюра</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let item of emoji | orderBy: key : reverse
+                                      | emojiFilter:filter
+                                      | paginate: { itemsPerPage: 100, currentPage: p }; let i = index"
+            [ngClass]="(item.favorites) ? 'active': ''">
+                <th>{{item.name}}</th>
+                <td>
+                    <a class="alert-link"
+                       [href]="item.link"
+                       target="_blank">
+                        {{item.link}}
+                    </a>
+                </td>
+                <td>
+                    <img class="preview"
+                         [src]="item.link"
+                         [alt]="item.name">
+                </td>
+                <td class="btn-group" *ngIf="status === 'all'">
+                  <button [ngClass]="(item.favorites) ? 'btn btn-danger' : 'btn btn-outline-danger'"
+                          (click)="favoritesEdit(item)">
+                      <img [src]="(item.favorites) ? 'https://github.githubassets.com/images/icons/emoji/unicode/1f49b.png?v8' :'https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8'" alt="">
+                  </button>
+                  <button class="btn btn-primary" (click)="deletedEmoji(item)">
+                      <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f5d1.png?v8" alt="">
+                  </button>
+                </td>
+                <td class="btn-group" *ngIf="status === 'favorites'">
+                    <button [ngClass]="(item.favorites) ? 'btn btn-danger' : 'btn btn-outline-danger'"
+                            (click)="favoritesEdit(item)">
+                        <img [src]="(item.favorites) ? 'https://github.githubassets.com/images/icons/emoji/unicode/1f49b.png?v8' :'https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8'" alt="">
+                        {{(item.favorites) ? 'В избранном' : 'В избранное'}}
+                    </button>
+                </td>
+                <td class="btn-group" *ngIf="status === 'deleted'">
+                    <button class="btn btn-primary" (click)="bushelEmoji(item)">
+                        Восстановить
+                    </button>
+                </td>
+          </tr>
+    </tbody>
+</table>
+
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
 
 

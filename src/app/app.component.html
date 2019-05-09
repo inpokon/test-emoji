@@ -3,32 +3,13 @@
 <div class="emoji">
 		<div class="container">
 			<div class="row">
-				<div class="col-3">
+				<div class="col-2">
 						<app-side-bar></app-side-bar>
 				</div>
-				<div class="col-9">
+				<div class="col-10">
 						<div class="row">
-								<app-nav></app-nav>
-								<table class="table table-sm table-light">
-										<thead>
-										<tr>
-												<th scope="col">№</th>
-												<th scope="col">Название</th>
-												<th scope="col">Миниатюра</th>
-										</tr>
-										</thead>
-										<tbody>
-												<router-outlet></router-outlet>
-										</tbody>
-								</table>
-								<ngb-pagination
-												[(page)]="page"
-												[pageSize]="itemsPerPage"
-												[collectionSize]="collectionSize"
-												(pageChange)="onPageChanged()"
-								></ngb-pagination>
+								<router-outlet></router-outlet>
 						</div>
-
 				</div>
 			</div>
 		</div>
