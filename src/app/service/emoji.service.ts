@@ -13,9 +13,9 @@ export class EmojiService {
     return this.http.get(`http://localhost:3000/${emojiLink}`);
   }
 
-  editFavorites(item: any): Observable<any> {
+  editChoice(item: any): Observable<any> {
     item.favorites = !item.favorites;
-    return this.http.put(`http://localhost:3000/emoji/${item.id}`, item);
+    return this.http.put(`http://localhost:3000/emojiList/${item.id}`, item);
   }
 
   addFrom(item: any, emojiLink: string) {

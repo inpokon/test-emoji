@@ -78,7 +78,7 @@ export class EmojiComponent implements OnInit {
     }
 
     editFavorites(item: EmojiList) {
-        this.emojiService.editFavorites(item).subscribe(res => res);
+        this.emojiService.editChoice(item).subscribe(res => res);
     }
 
     addEmoji(item, emojiLink) {
