@@ -58,3 +58,27 @@ thead>tr>th {
 		background-color: #FF281F;
 	}
 }
+
+.preview-wrap {
+	position: relative;
+	overflow: visible;
+	&:hover .preview-big{
+		display: block;
+	}
+}
+
+.preview-big {
+	position: absolute;
+	bottom: 50px;
+	left: 50px;
+	width: 150px;
+	height: 150px;
+	display: none;
+	border: 1px solid #007bff;
+	border-radius: 8px;
+	-webkit-background-size: contain;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: #fff;
+}

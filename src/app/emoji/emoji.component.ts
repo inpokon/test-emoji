@@ -2,16 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import {EmojiService} from "../service/emoji.service";
 import {ActivatedRoute, Params} from "@angular/router";
 
+interface EmojiList {
+    id: number;
+    name: string;
+    link: string;
+    favorites: boolean;
+}
+
 @Component({
   selector: 'app-emoji',
   templateUrl: './emoji.component.html',
   styleUrls: ['./emoji.component.scss']
 })
 
+
 export class EmojiComponent implements OnInit {
 
-    emoji: Array<any> = [];
+    emojiList: EmojiList[] = [];
+    title: string;
+    status: string;
     filter: string = '';
+    favoritesIconRed: string = 'https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8';
+    favoritesIconYellow: string = 'https://github.githubassets.com/images/icons/emoji/unicode/1f49b.png?v8';
+    basketIcon: string = 'https://github.githubassets.com/images/icons/emoji/unicode/1f5d1.png?v8';
     //sorting
     key: string = 'name';
     reverse: boolean = false;
@@ -23,14 +36,8 @@ export class EmojiComponent implements OnInit {
     //initializing p to one
     p: number = 1;
 
-    title: string;
 
-    status: string;
-
-
-    constructor(private emojiService: EmojiService, private route: ActivatedRoute) {
-
-    }
+    constructor(private emojiService: EmojiService, private route: ActivatedRoute) {}
 
     ngOnInit() {
 
@@ -39,12 +46,12 @@ export class EmojiComponent implements OnInit {
                case "chosen":
                    this.title = 'Избранные';
                    this.status = 'favorites';
-                   this.emoji = [];
-                   this.emojiService.getEmoji()
-                       .subscribe((emoji) => {
+                   this.emojiList = [];
+                   this.emojiService.getEmoji('emojiList')
+                       .subscribe((emoji: EmojiList[]) => {
                            emoji.map((em) => {
                                if (em.favorites) {
-                                   this.emoji.push(em);
+                                   this.emojiList.push(em);
                                }
                            });
 
@@ -53,44 +60,47 @@ export class EmojiComponent implements OnInit {
                case "deleted":
                    this.title = 'Удаленные';
                    this.status = 'deleted';
-                   this.emojiService.getDeleted()
-                       .subscribe((emojiDeleted) => {
-                           this.emoji = emojiDeleted;
+                   this.emojiService.getEmoji('deleteEmoji')
+                       .subscribe((emojiDeleted: EmojiList[]) => {
+                           this.emojiList = emojiDeleted;
                        });
                    break;
                default :
                    this.title = "Все";
                    this.status = 'all';
-                   this.emojiService.getEmoji()
-                       .subscribe((emoji) => {
-                           this.emoji = emoji;
+                   this.emojiService.getEmoji('emojiList')
+                       .subscribe((emoji: EmojiList[]) => {
+                           this.emojiList = emoji;
                        });
                    break;
            }
        })
     }
-    favoritesEdit(item: EmojiComponent) {
 
-        this.emojiService.favoritesEdit(item).subscribe(res => res);
+    editFavorites(item: EmojiList) {
+        this.emojiService.editFavorites(item).subscribe(res => res);
     }
 
-    deletedEmoji(item: EmojiComponent) {
-        this.emojiService.addDeletedEmoji(item).subscribe(() => {
-            this.emoji = this.emoji.filter(data => data.id !== item.id);
-        });
-        this.emojiService.deletedEmoji(item).subscribe(() => {
-            this.emoji = this.emoji.filter(data => data.id !== item.id);
+    addEmoji(item, emojiLink) {
+        this.emojiService.addFrom(item, emojiLink).subscribe(() => {
+            this.emojiList = this.emojiList.filter(data => data.id !== item.id);
         });
     }
-    bushelEmoji(item: EmojiComponent) {
-        this.emojiService.bushelEmoji(item).subscribe(() => {
-            this.emoji = this.emoji.filter(data => data.id !== item.id);
-        });
-        this.emojiService.removeDeletedEmoji(item).subscribe(() => {
-            this.emoji = this.emoji.filter(data => data.id !== item.id);
-        });
+    removeEmoji(item, emojiLink) {
+        setTimeout(() => {
+            this.emojiService.removeFrom(item, emojiLink).subscribe(() => {
+                this.emojiList = this.emojiList.filter(data => data.id !== item.id);
+            });
+        }, 100)
     }
 
-
+    fromAllToRemote(item: EmojiList) {
+        this.addEmoji(item,'deleteEmoji');
+        this.removeEmoji(item,'emojiList');
+    }
+    fromRemoteToAll(item: EmojiList) {
+        this.addEmoji(item,'emojiList');
+        this.removeEmoji(item,'deleteEmoji');
+    }
 
 }

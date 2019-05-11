@@ -7,60 +7,61 @@
     <thead>
         <tr>
             <th (click)="sort('name')">
-                Имя
+                <span class="btn-link">Имя</span>
                 <span class="glyphicon sort-icon"
                       *ngIf="key =='name'"
                       [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
                 </span>
             </th>
             <th (click)="sort('link')">
-                Ссылка
+                <span class="btn-link">Ссылка</span>
                 <span class="glyphicon sort-icon"
                       *ngIf="key =='link'"
                       [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
                 </span>
             </th>
-            <th>Миниатюра</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
 
     <tbody>
-        <tr *ngFor="let item of emoji | orderBy: key : reverse
+        <tr *ngFor="let emoji of emojiList | orderBy: key : reverse
                                       | emojiFilter:filter
-                                      | paginate: { itemsPerPage: 100, currentPage: p }; let i = index"
-            [ngClass]="(item.favorites) ? 'active': ''">
-                <th>{{item.name}}</th>
+                                      | paginate: { itemsPerPage: 100, currentPage: p };"
+            [ngClass]="(emoji.favorites) ? 'active': ''">
+                <th>{{emoji.name}}</th>
                 <td>
                     <a class="alert-link"
-                       [href]="item.link"
+                       [href]="emoji.link"
                        target="_blank">
-                        {{item.link}}
+                        {{emoji.link}}
                     </a>
                 </td>
-                <td>
+                <td class="preview-wrap">
                     <img class="preview"
-                         [src]="item.link"
-                         [alt]="item.name">
+                         [src]="emoji.link"
+                         [alt]="emoji.name">
+                    <span class="preview-big" [style.backgroundImage]="'url(' + emoji.link + ')'"></span>
                 </td>
                 <td class="btn-group" *ngIf="status === 'all'">
-                  <button [ngClass]="(item.favorites) ? 'btn btn-danger' : 'btn btn-outline-danger'"
-                          (click)="favoritesEdit(item)">
-                      <img [src]="(item.favorites) ? 'https://github.githubassets.com/images/icons/emoji/unicode/1f49b.png?v8' :'https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8'" alt="">
+                  <button [ngClass]="(emoji.favorites) ? 'btn btn-danger' : 'btn btn-outline-danger'"
+                          (click)="editFavorites(emoji)">
+                      <img [src]="(emoji.favorites) ? favoritesIconYellow : favoritesIconRed" alt="">
                   </button>
-                  <button class="btn btn-primary" (click)="deletedEmoji(item)">
-                      <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f5d1.png?v8" alt="">
+                  <button class="btn btn-primary" (click)="fromAllToRemote(emoji)">
+                      <img [src]="basketIcon" alt="">
                   </button>
                 </td>
                 <td class="btn-group" *ngIf="status === 'favorites'">
-                    <button [ngClass]="(item.favorites) ? 'btn btn-danger' : 'btn btn-outline-danger'"
-                            (click)="favoritesEdit(item)">
-                        <img [src]="(item.favorites) ? 'https://github.githubassets.com/images/icons/emoji/unicode/1f49b.png?v8' :'https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8'" alt="">
-                        {{(item.favorites) ? 'В избранном' : 'В избранное'}}
+                    <button [ngClass]="(emoji.favorites) ? 'btn btn-danger' : 'btn btn-outline-danger'"
+                            (click)="editFavorites(emoji)">
+                        <img [src]="(emoji.favorites) ? favoritesIconYellow : favoritesIconRed " alt="">
+                        {{(emoji.favorites) ? 'В избранном' : 'В избранное'}}
                     </button>
                 </td>
                 <td class="btn-group" *ngIf="status === 'deleted'">
-                    <button class="btn btn-primary" (click)="bushelEmoji(item)">
+                    <button class="btn btn-primary" (click)="fromRemoteToAll(emoji)">
                         Восстановить
                     </button>
                 </td>
